@@ -1,12 +1,13 @@
 class PoupeeRusse:
     def __init__(self, nom , taille):
+        """Responsable de l’initialisation de la poupée avec un nom et une taille positifs."""
         self.__nom = nom
         self.__taille = taille
         self.__est_ouverte = False
         self.__dans = None
         self.__contient = None
 
-    # -- Getters --
+    # Getters
     @property
     def nom(self):
         return self.__nom
@@ -27,8 +28,7 @@ class PoupeeRusse:
     def contient(self):
         return self.__contient
 
-    # -- Setters --
-
+    # Setters
     @est_ouverte.setter
     def est_ouverte(self, est_ouverte):
         if isinstance(est_ouverte, bool):
@@ -38,29 +38,33 @@ class PoupeeRusse:
 
     @dans.setter
     def dans(self, dans_autre):
-        if dans_autre is None or isinstance(dans_autre, PoupeeRusse):
-            self.__dans = dans_autre
-        else:
-            raise TypeError("Il faut que ce soit une autre poupée ou None")
+        if dans_autre is not None and not isinstance(dans_autre, PoupeeRusse):
+            raise TypeError("dans doit être une autre poupée ou None")
+        if dans_autre is self:
+            raise ValueError("Une poupée ne peut pas être dans elle-même")
+        self.__dans = dans_autre
 
     @contient.setter
     def contient(self, contient):
-        if contient is None or isinstance(contient, PoupeeRusse):
-            self.__contient = contient
-        else:
-            raise TypeError("Il faut que ce soit une autre poupée ou None")
+        if contient is not None and not isinstance(contient, PoupeeRusse):
+            raise TypeError("contient doit être une autre poupée ou None")
+        if contient is self:
+            raise ValueError("Une poupée ne peut pas se contenir elle-même")
+        self.__contient = contient
 
-    # -- Fonctions --
-
+    # Fonctions
     def ouvrir(self):
+        """Ouvre la poupée si elle n’est pas déjà ouverte et n’est pas dans une autre."""
         if not self.__est_ouverte and self.__dans is None:
             self.__est_ouverte = True
 
     def fermer(self):
+        """Ferme la poupée si elle n’est pas déjà fermée et n’est pas dans une autre."""
         if self.__est_ouverte and self.__dans is None:
             self.__est_ouverte = False
 
     def placer_dans(self, p):
+        """Place la poupée courante dans p si les conditions sont respectées."""
         if (
             self.__dans is None
             and p.__contient is None
@@ -72,32 +76,50 @@ class PoupeeRusse:
             self.__dans = p
 
     def sortir_de(self):
-        if self.__dans is not None and self.__est_ouverte:
+        """Sort la poupée courante d’une autre si la contenante est ouverte."""
+        if self.__dans is not None and self.__dans.est_ouverte:
             self.__dans.__contient = None
             self.__dans = None
 
     def __str__(self):
-        return(f"Nom : {self.__nom},"
-              f"Taille : {self.__taille},"
-              f"Etat d'ouverture : {self.__est_ouverte},",
-              f"Dans : {self.__dans.__nom}",
-              f"Contient : {self.__contient.__nom}")
+        """Retourne les caractéristiques de la poupée."""
+        etat = "ouverte" if self.__est_ouverte else "fermée"
+        dans = self.__dans.__nom if self.__dans is not None else "aucune"
+        contient = self.__contient.__nom if self.__contient is not None else "aucune"
 
-
+        return (
+            f"Nom : {self.__nom} - "
+            f"Taille : {self.__taille} - "
+            f"État : {etat} - "
+            f"Dans : {dans} - "
+            f"Contient : {contient}"
+        )
 
 def main():
     poupee1 = PoupeeRusse("Sophia", 10)
     poupee2 = PoupeeRusse("Jade", 20)
 
-    poupee1.ouvrir()
+    print("--- Tests des méthodes ---")
+    poupee2.ouvrir()
     poupee1.placer_dans(poupee2)
+    print("Après placement :")
     print(poupee1)
+    print(poupee2)
+
+    print("\n--- Test de sortie ---")
+    poupee2.ouvrir()
+    poupee1.sortir_de()
+    print("Après sortie :")
+    print(poupee1)
+    print(poupee2)
+
+    print("\n--- Vérification de l’état ---")
+    print(f"La poupée {poupee1.nom} est {'ouverte' if poupee1.est_ouverte else 'fermée'}")
+    print(f"La poupée {poupee2.nom} est {'ouverte' if poupee2.est_ouverte else 'fermée'}")
+
+    print("\n--- Affichage des caractéristiques ---")
+    print(poupee1)
+    print(poupee2)
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
