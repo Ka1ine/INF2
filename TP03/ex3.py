@@ -1,6 +1,8 @@
+import random
+
 class Pokemon:
     def __init__(self, nom, pv, atk):
-        """Responsable de l’initialisation du Pokémon avec un nom, des PV et une ATK positifs."""
+        """------------"""
         self.nom = nom
         self.pv = pv
         self.atk = atk
@@ -36,3 +38,16 @@ class Pokemon:
         if not isinstance(atk, int) or atk <= 0:
             raise ValueError("Doivent être un entier positif.")
         self.__atk = atk
+
+    @property
+    def est_ko(self):
+        """------------"""
+        return self.__pv <= 0
+
+    def attaquer(self, autre):
+        """------------"""
+        degats = random.randint(0, self.atk)
+        nouveaux_pv = autre.pv - degats
+        autre.pv = nouveaux_pv
+
+    
