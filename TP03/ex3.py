@@ -28,9 +28,9 @@ class Pokemon:
 
     @pv.setter
     def pv(self, pv):
-        if not isinstance(pv, int) or pv <= 0:
+        if not isinstance(pv, int):
             raise ValueError("La valeur doit être un entier positif.")
-        self.__pv = pv
+        self.__pv = max(0,pv)
 
     @atk.setter
     def atk(self, atk):
@@ -46,9 +46,12 @@ class Pokemon:
     def attaquer(self, autre):
         """------------"""
         degats = random.randint(0, self.atk)
-        nouveaux_pv = autre.pv - (degats * self.calc_multiplicateur(autre))
+        nouveaux_pv = autre.pv - int((degats * self.calc_multiplicateur(autre)))
         autre.pv = nouveaux_pv
-
+        
+    def calc_multiplicateur(self, autre):
+        return 1.0
+        
     def combattre(self, autre):
         tours = 0
         while not self.est_ko and not autre.est_ko:
@@ -57,9 +60,10 @@ class Pokemon:
                 autre.attaquer(self)
             tours += 1
         if self.est_ko:
-            return (autre, tours)
-        elif self.est_ko:
-            return (self, tours)
+            gagnant = autre
+        else:
+            gagnant = self
+        return ganant, tours
 
     def __str__(self):
         if self.est_ko:
