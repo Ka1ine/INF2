@@ -63,7 +63,7 @@ class Pokemon:
             gagnant = autre
         else:
             gagnant = self
-        return ganant, tours
+        return gagnant, tours
 
     def __str__(self):
         if self.est_ko:
@@ -121,5 +121,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
