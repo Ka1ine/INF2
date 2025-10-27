@@ -13,9 +13,13 @@ def extraire_pi():
             pi += float(len(m)) * (10.0 ** float(i))
             i -= 1
     return (pi)
+def creer_fichier_pi():
+    with open('pi.txt','x'):
+        pass 
+
 
 def ecrire_pi():
-    with open("chiffre.txt",'x+w') as f:
+    with open("chiffre.txt",'w') as f:
         f.write(str(extraire_pi()))
 
 
@@ -23,6 +27,7 @@ def main():
     print(os.getcwd())
     print(f"Valeur calculé : {extraire_pi()}")
     print(f"Valeur importé : {math.pi}")
+    creer_fichier_pi()
     ecrire_pi()
 
 
