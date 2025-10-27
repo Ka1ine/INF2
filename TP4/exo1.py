@@ -15,7 +15,7 @@ def extraire_pi():
     return (pi)
 
 def ecrire_pi():
-    with open("chiffre.txt",'x') as f:
+    with open("chiffre.txt",'x+w') as f:
         f.write(str(extraire_pi()))
 
 
