@@ -1,5 +1,5 @@
 import csv
-
+#creation de la classe etudiant
 class Etudiant:
     def __init__(self,nom,a,gpa,connais_python):
         self._nom=nom
@@ -22,7 +22,7 @@ class Etudiant:
     @property
     def connais_python(self):
         return self._connais_python
-
+#setters et getters
     @nom.setter
     def nom(self,nom):
         if isinstance(nom,str):
@@ -58,7 +58,7 @@ class Etudiant:
     @connais_python.getter
     def connais_python(self):
         return self._connais_python
-
+#fonctions
     def to_dict(self):
         etudico={}
         etudico["nom"]=self.nom
@@ -66,18 +66,18 @@ class Etudiant:
         etudico["gpa"]=self.gpa
         etudico["connais_python"]=self.connais_python
         return etudico
-
+#methode de classe
     @classmethod
     def from_dict(cls, d):
         """Crée un étudiant depuis un dictionnaire."""
         return cls(d["nom"], int(d["annee_naissance"]), float(d["gpa"]), bool(d["connais_python"]))
 
-
+#Creation de la classe groupe 
 class Groupe:
     def __init__(self):
         """Initialise la liste d'étudiants."""
         self._etudiants=[]
-
+#fonctions
     def ajouter_etudiant(self,etudiant):
         """Ajoute un étudiant au groupe."""
         if isinstance(etudiant,Etudiant):
@@ -96,7 +96,7 @@ class Groupe:
             writer.writeheader()
             for etu in self._etudiants:
                 writer.writerow(etu.to_dict())
-
+#methode de classe
     @classmethod
     def charger_csv(cls, nom_fichier):
         """Charge un groupe depuis un CSV."""
