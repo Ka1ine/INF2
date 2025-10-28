@@ -2,6 +2,8 @@ import csv
 #creation de la classe etudiant
 class Etudiant:
     def __init__(self,nom,a,gpa,connais_python):
+        """Initialise un objet étudiant avec un nom type str, une année de naissance de type entier,
+        un gpa de type float et un booléen qui décrit si l'étudiant connait python"""
         self._nom=nom
         self._annee_naissance = a
         self._gpa = gpa
