@@ -58,8 +58,9 @@ class Etudiant:
     @connais_python.getter
     def connais_python(self):
         return self._connais_python
-#fonctions
+#fomctions
     def to_dict(self):
+        """Transforme l'objet étudiant dans un dictionnaire"""
         etudico={}
         etudico["nom"]=self.nom
         etudico["annee_naissance"]=self.annee_naissance
@@ -72,7 +73,7 @@ class Etudiant:
         """Crée un étudiant depuis un dictionnaire."""
         return cls(d["nom"], int(d["annee_naissance"]), float(d["gpa"]), bool(d["connais_python"]))
 
-#Creation de la classe groupe 
+#Creation de la classe groupe
 class Groupe:
     def __init__(self):
         """Initialise la liste d'étudiants."""
